@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشغل الصوت</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            direction: rtl;
+        }
+        .audio-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: right;
+            width: 500px;
+            display: flex;
+            align-items: center;
+            gap: 15px; /* تباعد بين الصورة والمشغل */
+        }
+        .audio-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        .audio-content {
+            flex: 1;
+        }
+        .audio-content h2 {
+            margin-bottom: 10px;
+            text-align: right;
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="audio-card">
+        <img src="images/b1.jpg" alt="صورة الموسيقى">
+        <div class="audio-content">
+            <h2>بطاقة مشغل الصوت</h2>
+            <audio controls>
+                <source src="audio11.mp3" type="audio/mp3">
+                متصفحك لا يدعم تشغيل الصوت.
+            </audio>
+        </div>
+    </div>
+</body>
+</html>

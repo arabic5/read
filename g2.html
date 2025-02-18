@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الألعاب التعليمية</title>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+        .game-embed {
+            margin-top: 20px;
+        }
+        .back-button {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: #e84118;
+            transform: scale(1.05);
+        }
+    </style>
+       <link rel="icon" href="images/logo.png" type="images/logo.png" sizes="32x32">
+
+</head>
+<body>
+    <div class="container">
+        <h1>اقرا الفقره ثم ابدأ اللعب</h1>
+        <p>خرج أحمد في نزهة إلى الحديقة مع أصدقائه. كانوا يلعبون كرة السلة ويستمتعون بوقتهم. بعد اللعب، جلسوا على</p>
+        <p>العشب وتناولوا العصير وبعض الساندويشات. عاد أحمد إلى المنزل سعيدًا بعد قضاء يوم ممتع.</p>
+        
+        <div class="game-embed">
+        <!-- تضمين نشاط ورد أو أي كود آخر هنا -->
+        <iframe style="max-width:100%" src="https://wordwall.net/ar/embed/06d487a7ca0b4c8ea6425d5c52457fef?themeId=1&templateId=79&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>  
+    </div>
+    <button class="back-button" onclick="window.history.back()">🔙 الرجوع</button>
+
+</body>
+</html>

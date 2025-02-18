@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>قصص مسموعه - منصة أقرأُ وأُبدعُ</title>
+
+    <!-- أيقونة الموقع -->
+    <link rel="icon" href="images/logo.png" type="image/png" sizes="32x32">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+
+    <!-- Font Awesome icons -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- ملف CSS المخصص -->
+    <link href="css/style_blog.css" rel="stylesheet">
+
+    <style>
+        .audio-container {
+            text-align: center;
+            margin: 30px auto;
+            max-width: 90%;
+        }
+        .audio-container h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .audio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* عمودين */
+            gap: 20px; /* تباعد بين العناصر */
+            justify-content: center;
+        }
+        .audio-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .audio-section img {
+            width: 90px;
+            height: 90px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        .audio-content {
+            flex: 1;
+            text-align: right;
+        }
+        .audio-content h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        audio {
+            width: 100%;
+            height: 40px;
+        }
+        
+        /* جعل التصميم متجاوبًا */
+        @media (max-width: 768px) {
+            .audio-grid {
+                grid-template-columns: 1fr; /* عمود واحد على الشاشات الصغيرة */
+            }
+        }
+    </style>
+
+</head>
+
+<body class="sub_page">
+    <div class="full_bg">
+        <div class="slider_main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="carouselExampleIndicators" class="carousel slide"> 
+                            <ol class="carousel-indicators">
+                                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"></li>
+                                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="active"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="carousel-caption relative">
+                                        <div class="row d_flex">
+                                            <div class="col-md-7">
+                                                <div class="banner_img">
+                                                    <figure><img class="img_responsive" src="images/class2.png"></figure>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="board">
+                                                    <i><img src="images/top_icon.png" alt="#"></i>
+                                                    <h3>قصص مسموعه</h3>
+                                                    <br>
+                                                    <a href="index.html">
+                                                        <div class="b1">
+                                                            <p>الرجوع</p>
+                                                        </div>
+                                                    </a>
+                                                    <div class="link_btn">
+                                                        <a class="read_more"><span></span></a>
+                                                    </div>
+                                                </div>                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- نهاية الكاروسيل -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- نهاية full_bg -->
+
+    <!-- قسم قائمة القصص -->
+    <div class="audio-container">
+        <h2> قائمة القصص المسموعه</h2>
+
+        <div class="audio-grid">
+            <!-- تكرار المشغلات في عمودين -->
+            <div class="audio-section">
+                <img src="images/l1.webp" alt="صورة الموسيقى">
+                <div class="audio-content">
+                    <h3>قصة : العصفور سوسو 🐦</h3>
+                    <audio controls>
+                        <audio controls>
+                            <source src="audio/audio1.mp3" type="audio/mpeg">
+                            متصفحك لا يدعم تشغيل الصوت.
+                        </audio>
+                    </audio>
+                </div>
+            </div>
+
+            <div class="audio-section">
+                <img src="images/l2.jpg" alt="صورة الموسيقى">
+                <div class="audio-content">
+                    <h3>قصة : الجمل و الفيل</h3>
+                    <audio controls>
+                        <source src="audio/audio2.mp3" type="audio/mp3">
+                        متصفحك لا يدعم تشغيل الصوت.
+                    </audio>
+                </div>
+            </div>
+
+            <div class="audio-section">
+                <img src="images/l3.webp" alt="صورة الموسيقى">
+                <div class="audio-content">
+                    <h3>قصة : الاسد و الفار </h3>
+                    <audio controls>
+                        <source src="audio/audio3.mp3" type="audio/mp3">
+                        متصفحك لا يدعم تشغيل الصوت.
+                    </audio>
+                </div>
+            </div>
+
+            <div class="audio-section">
+                <img src="images/l4.jpg" alt="صورة الموسيقى">
+                <div class="audio-content">
+                    <h3>قصة : الثعلب و اللقلق</h3>
+                    <audio controls>
+                        <source src="audio/audio4.mp3" type="audio/mp3">
+                        متصفحك لا يدعم تشغيل الصوت.
+                    </audio>
+                </div>
+            </div>
+
+            <div class="audio-section">
+                <img src="images/l5.jpg" alt="صورة الموسيقى">
+                <div class="audio-content">
+                    <h3>قصة :  جحا وبنه</h3>
+                    <audio controls>
+                        <source src="audio/audio5.mp3" type="audio/mp3">
+                        متصفحك لا يدعم تشغيل الصوت.
+                    </audio>
+                </div>
+            </div>
+
+            <div class="audio-section">
+                <img src="images/l6.jpg" alt="صورة الموسيقى">
+                <div class="audio-content">
+                    <h3>قصة : الارنب المتعب  </h3>
+                    <audio controls>
+                        <source src="audio/audio6.mp3" type="audio/mp3">
+                        متصفحك لا يدعم تشغيل الصوت.
+                    </audio>
+                </div>
+            </div>
+            <div class="audio-section">
+               <img src="images/l7.webp" alt="صورة الموسيقى">
+               <div class="audio-content">
+                   <h3>قصة :  العصافير و الثعلب</h3>
+                   <audio controls>
+                       <source src="audio/audio7.mp3" type="audio/mp3">
+                       متصفحك لا يدعم تشغيل الصوت.
+                   </audio>
+               </div>
+           </div>
+
+           <div class="audio-section">
+               <img src="images/l8.webp" alt="صورة الموسيقى">
+               <div class="audio-content">
+                   <h3>قصة: الكنز السحر</h3>
+                   <audio controls>
+                       <source src="audio/audio8.mp3" type="audio/mp3">
+                       متصفحك لا يدعم تشغيل الصوت.
+                   </audio>
+               </div>
+           </div>
+           <div class="audio-section">
+            <img src="images/l9.jpg" alt="صورة الموسيقى">
+            <div class="audio-content">
+                <h3>قصة: الاوزه و البيضه الذهبيه</h3>
+                <audio controls>
+                    <source src="audio/audio9.mp3" type="audio/mp3">
+                    متصفحك لا يدعم تشغيل الصوت.
+                </audio>
+            </div>
+        </div>
+
+        <div class="audio-section">
+            <img src="images/l10.jpg" alt="صورة الموسيقى">
+            <div class="audio-content">
+                <h3>قصة: يمكن خير</h3>
+                <audio controls>
+                    <source src="audio/audio10.mp3" type="audio/mp3">
+                    متصفحك لا يدعم تشغيل الصوت.
+                </audio>
+            </div>
+        </div>
+        </div> <!-- نهاية audio-grid -->
+        
+    </div>
+
+    <!--  footer -->
+    <footer>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>.جميع الحقوق محفوظة منصة أقرأُ وأُبدعُ ©</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
