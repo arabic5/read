@@ -57,7 +57,6 @@ a {
      -o-transition: all .3s ease-in-out;
      transition: all .3s ease-in-out;
 }
-
 h1,
 h2,
 h3,
@@ -512,7 +511,7 @@ ul.email li i {
 /** our class **/
 
 .class {
-     padding: 100px 0px 50px 0px;
+     padding: 200px 0px 50px 0px;
 }
 
 .class .titlepage p {
