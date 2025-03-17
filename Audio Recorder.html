@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مراجعة الصوت</title>
+    <link rel="icon" href="images/logo.png" type="images/logo.png" sizes="32x32">
+
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            direction: rtl;
+            padding: 10px;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 95%;
+            max-width: 600px;
+            transition: opacity 0.5s ease;
+        }
+        .header {
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+        }
+        input {
+            width: calc(100% - 20px);
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+        button {
+            cursor: pointer;
+            transition: 0.3s;
+            color: white;
+        }
+        #startRecording {
+            background-color: #007bff;
+        }
+        #stopRecording {
+            background-color: #ff4757;
+        }
+        .submit-button {
+            background-color: #ffdd57;
+            color: black;
+        }
+        .back-button {
+            background-color: #ff4757;
+            margin-top: 10px;
+        }
+        #statusMessage {
+            font-size: 22px;
+            font-weight: bold;
+            color: black;
+            display: none;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+        #recordingIndicator {
+            display: none;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">🎤 تسجيل صوت للمراجعة 🎤</div>
+    <div class="container" id="mainContent">
+        <form id="uploadForm">
+            <label for="username">الاسم:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <button type="button" id="startRecording">🎙️ بدء التسجيل</button>
+            <button type="button" id="stopRecording" disabled>⏹️ إيقاف التسجيل</button>
+            <p id="recordingIndicator">🔴 جاري التسجيل...</p>
+            <br>
+            <audio id="audioPlayback" controls></audio>
+            <br>
+            <button type="submit" class="submit-button">📤 إرسال</button>
+            <button type="button" class="back-button" onclick="window.location.href='index.html'">🔙 الرجوع</button>
+        </form>
+    </div>
+    <p id="statusMessage"></p>
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+        document.getElementById('startRecording').addEventListener('click', async function() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+                mediaRecorder.start();
+                document.getElementById('recordingIndicator').style.display = 'block';
+                
+                mediaRecorder.addEventListener('dataavailable', event => {
+                    audioChunks.push(event.data);
+                });
+                
+                mediaRecorder.addEventListener('stop', () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    document.getElementById('audioPlayback').src = audioUrl;
+                    document.getElementById('recordingIndicator').style.display = 'none';
+                });
+                
+                document.getElementById('startRecording').disabled = true;
+                document.getElementById('stopRecording').disabled = false;
+            } catch (error) {
+                alert('خطأ في الوصول إلى الميكروفون');
+            }
+        });
+
+        document.getElementById('stopRecording').addEventListener('click', function() {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+            }
+            document.getElementById('startRecording').disabled = false;
+            document.getElementById('stopRecording').disabled = true;
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            
+            if (!username || audioChunks.length === 0) {
+                alert('يرجى إدخال الاسم وتسجيل الصوت');
+                return;
+            }
+            
+            document.getElementById('mainContent').style.opacity = '0';
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.innerText = 'جاري الإرسال...';
+            statusMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                statusMessage.innerText = 'تم الإرسال ✅';
+                
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
