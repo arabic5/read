@@ -2,10 +2,8 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مراجعة الصوت</title>
-    <link rel="icon" href="images/logo.png" type="images/logo.png" sizes="32x32">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>تسجيل الصوت للتقيم</title>
     <style>
         body {
             font-family: 'Tajawal', sans-serif;
@@ -16,157 +14,138 @@
             background: linear-gradient(to right, #4facfe, #00f2fe);
             direction: rtl;
             padding: 10px;
+            margin: 0;
             min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .header {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
             text-align: center;
         }
         .container {
             background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
-            width: 95%;
-            max-width: 600px;
-            transition: opacity 0.5s ease;
-        }
-        .header {
-            font-size: 30px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
-        }
-        label {
-            font-size: 18px;
-            font-weight: bold;
+            width: 90%;
+            max-width: 400px;
         }
         input, button {
-            margin: 10px 0;
-            padding: 10px;
+            margin: 8px;
+            padding: 12px;
             font-size: 16px;
-            border-radius: 8px;
+            width: 100%;
+            border-radius: 6px;
             border: none;
-        }
-        input {
-            width: calc(100% - 20px);
-            text-align: center;
-            border: 1px solid #ccc;
+            box-sizing: border-box;
         }
         button {
             cursor: pointer;
-            transition: 0.3s;
+            background-color: #007BFF;
             color: white;
-        }
-        #startRecording {
-            background-color: #007bff;
-        }
-        #stopRecording {
-            background-color: #ff4757;
-        }
-        .submit-button {
-            background-color: #ffdd57;
-            color: black;
-        }
-        .back-button {
-            background-color: #ff4757;
-            margin-top: 10px;
-        }
-        #statusMessage {
-            font-size: 22px;
             font-weight: bold;
-            color: black;
-            display: none;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            margin-top: 20px;
+            transition: 0.3s;
         }
-        #recordingIndicator {
-            display: none;
-            color: red;
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ff5c5c;
+            cursor: not-allowed;
+        }
+        audio {
+            display: block;
+            margin: 15px auto;
+            width: 100%;
+        }
+        .status {
+            font-size: 16px;
+            color: #ff4757;
             font-weight: bold;
+            margin-top: 8px;
         }
     </style>
 </head>
 <body>
-    <div class="header">🎤 تسجيل صوت للمراجعة 🎤</div>
-    <div class="container" id="mainContent">
-        <form id="uploadForm">
-            <label for="username">الاسم:</label>
-            <input type="text" id="username" name="username" required>
-            <br>
-            <button type="button" id="startRecording">🎙️ بدء التسجيل</button>
-            <button type="button" id="stopRecording" disabled>⏹️ إيقاف التسجيل</button>
-            <p id="recordingIndicator">🔴 جاري التسجيل...</p>
-            <br>
-            <audio id="audioPlayback" controls></audio>
-            <br>
-            <button type="submit" class="submit-button">📤 إرسال</button>
-            <button type="button" class="back-button" onclick="window.location.href='index.html'">🔙 الرجوع</button>
-        </form>
+    <div class="header">تسجيل الصوت للتقيم </div>
+    <div class="container">
+        <input type="text" id="name" placeholder="ادخل اسمك مع القبيله فقط" required>
+        <button id="startRecord">🎤 بدء التسجيل</button>
+        <button id="stopRecord" disabled>⏹ إيقاف التسجيل</button>
+        <p id="recordingStatus" class="status"></p>
+        <audio id="audioPlayback" controls></audio>
+        <button id="upload" disabled>📤 الارسال إلى التقيم من قبل المعلم</button>
+        <p id="uploadStatus" class="status"></p>
+        <button id="backButton">🔙 الرجوع</button>
+
     </div>
-    <p id="statusMessage"></p>
+
+    
     <script>
         let mediaRecorder;
         let audioChunks = [];
+        let audioBlob;
 
-        document.getElementById('startRecording').addEventListener('click', async function() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(stream);
-                audioChunks = [];
-                mediaRecorder.start();
-                document.getElementById('recordingIndicator').style.display = 'block';
-                
-                mediaRecorder.addEventListener('dataavailable', event => {
-                    audioChunks.push(event.data);
-                });
-                
-                mediaRecorder.addEventListener('stop', () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                    const audioUrl = URL.createObjectURL(audioBlob);
-                    document.getElementById('audioPlayback').src = audioUrl;
-                    document.getElementById('recordingIndicator').style.display = 'none';
-                });
-                
-                document.getElementById('startRecording').disabled = true;
-                document.getElementById('stopRecording').disabled = false;
-            } catch (error) {
-                alert('خطأ في الوصول إلى الميكروفون');
-            }
-        });
 
-        document.getElementById('stopRecording').addEventListener('click', function() {
-            if (mediaRecorder && mediaRecorder.state === 'recording') {
-                mediaRecorder.stop();
-            }
-            document.getElementById('startRecording').disabled = false;
-            document.getElementById('stopRecording').disabled = true;
-        });
+        document.getElementById('backButton').addEventListener('click', () => {
+    window.history.back();
+});
 
-        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
+
+        document.getElementById('startRecord').addEventListener('click', async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+            document.getElementById('recordingStatus').textContent = "🔴 جاري التسجيل...";
             
-            if (!username || audioChunks.length === 0) {
-                alert('يرجى إدخال الاسم وتسجيل الصوت');
+            mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
+            mediaRecorder.onstop = async () => {
+                audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                document.getElementById('audioPlayback').src = URL.createObjectURL(audioBlob);
+                document.getElementById('upload').disabled = false;
+                document.getElementById('recordingStatus').textContent = "✅ تم التسجيل";
+            };
+            mediaRecorder.start();
+            document.getElementById('startRecord').disabled = true;
+            document.getElementById('stopRecord').disabled = false;
+        });
+
+        document.getElementById('stopRecord').addEventListener('click', () => {
+            mediaRecorder.stop();
+            document.getElementById('startRecord').disabled = false;
+            document.getElementById('stopRecord').disabled = true;
+        });
+
+        document.getElementById('upload').addEventListener('click', async () => {
+            const name = document.getElementById('name').value.trim();
+            if (!name || !audioBlob) {
+                alert('يرجى إدخال الاسم وتسجيل الصوت قبل الرفع.');
                 return;
             }
             
-            document.getElementById('mainContent').style.opacity = '0';
-            const statusMessage = document.getElementById('statusMessage');
-            statusMessage.innerText = 'جاري الإرسال...';
-            statusMessage.style.display = 'block';
-            
-            setTimeout(() => {
-                statusMessage.innerText = 'تم الإرسال ✅';
+            document.getElementById('uploadStatus').textContent = "🔄 جاري الارسال...";
+            const reader = new FileReader();
+            reader.readAsDataURL(audioBlob);
+            reader.onloadend = async () => {
+                const base64Audio = reader.result.split(',')[1];
                 
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
-            }, 4000);
+                const response = await fetch('https://script.google.com/macros/s/AKfycbyIrWI-A4G0kwSV_0kpBCE6W9Np9MPUCkaAN2V4tBrxrsZkuZJPI8k0zjvIFZ1Optoc7w/exec', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ name: name, audio: base64Audio })
+                });
+                
+                const result = await response.text();
+                document.getElementById('uploadStatus').textContent = "✅ تم الارسال بنجاح";
+                alert(result);
+            };
         });
     </script>
 </body>
 </html>
+
